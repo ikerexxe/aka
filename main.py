@@ -45,7 +45,7 @@ def instalation(driver):
 			option.click()
 
 def main():
-	iker = User("test1", "test2")
+	iker = User()
 	main_driver = user_authentication(iker)
 	driver = reservation(main_driver)
 	driver = instalation(driver)

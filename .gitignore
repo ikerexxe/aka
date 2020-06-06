@@ -1,1 +1,5 @@
+# Object files
 __pycache__/
+
+# Configuration files
+aka.conf
