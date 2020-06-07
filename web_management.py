@@ -55,3 +55,28 @@ def installation(driver):
 		return driver
 	except:
 		driver.quit()
+
+def select_date(driver):
+	xpath = "//*[@class='day dialibre' and @data-day='08/06/2020']"
+	try:
+		link = WebDriverWait(driver, 10).until(
+			EC.presence_of_element_located((By.XPATH, xpath))
+		)
+		link.click()
+
+		return driver
+	except:
+		driver.quit()
+
+def select_hour(driver):
+	xpath = "//tr[10]/td[1]"
+	try:
+		link = WebDriverWait(driver, 10).until(
+			EC.presence_of_element_located((By.XPATH, xpath))
+		)
+		print(link.text)
+		link.click()
+
+		return driver
+	except:
+		driver.quit()
