@@ -38,17 +38,26 @@ def reservation(driver):
 	except:
 		driver.quit()
 
-def instalation(driver):
+def installation(driver):
 	box = driver.find_element_by_id("MainContent_MainContent_cboFiliales")
 	for option in box.find_elements_by_tag_name('option'):
 		if option.text in "PACO YOLDI":
 			option.click()
+	try:
+		link = WebDriverWait(driver, 10).until(
+			EC.presence_of_element_located((By.ID, "MainContent_MainContent_gridReservas"))
+		)
+		link.click()
+
+		return driver
+	except:
+		driver.quit()
 
 def main():
 	iker = User()
 	main_driver = user_authentication(iker)
 	driver = reservation(main_driver)
-	driver = instalation(driver)
+	driver = installation(driver)
 
 	time.sleep(5)
 	main_driver.close()
