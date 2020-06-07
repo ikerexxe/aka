@@ -3,12 +3,19 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
-def user_authentication(iker):
+def user_authentication(headless, iker):
 	DRIVER_PATH = "./chromedriver"
 	WEB_PAGE = "https://www.donostia.eus/donostiakirola/kirolekintzak/login.aspx?idioma=ES"
 
-	driver = webdriver.Chrome(DRIVER_PATH)
+	if(headless):
+		options = Options()
+		options.set_headless()
+		assert options.headless # Operating in headless mode
+		driver = webdriver.Chrome(DRIVER_PATH, chrome_options=options)
+	else:
+		driver = webdriver.Chrome(DRIVER_PATH)
 	driver.get(WEB_PAGE)
 
 	web_dni = driver.find_element_by_id("MainContent_MainContent_a2txtCodigo_txtA2TextBox")

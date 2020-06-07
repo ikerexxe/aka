@@ -3,9 +3,11 @@ import time
 from user import User
 from web_management import *
 
+headless = False
+
 def main():
 	iker = User()
-	main_driver = user_authentication(iker)
+	main_driver = user_authentication(headless, iker)
 	driver = reservation(main_driver)
 	driver = installation(driver)
 
