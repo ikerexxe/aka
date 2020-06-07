@@ -12,6 +12,7 @@ def main():
 	driver = installation(driver)
 	driver = select_date(driver)
 	driver = select_hour(driver)
+	driver = reserve(driver)
 
 	time.sleep(5)
 	main_driver.close()

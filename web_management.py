@@ -74,7 +74,17 @@ def select_hour(driver):
 		link = WebDriverWait(driver, 10).until(
 			EC.presence_of_element_located((By.XPATH, xpath))
 		)
-		print(link.text)
+		link.click()
+
+		return driver
+	except:
+		driver.quit()
+
+def reserve(driver):
+	try:
+		link = WebDriverWait(driver, 10).until(
+			EC.presence_of_element_located((By.ID, "MainContent_MainContent_cmdConfirmar"))
+		)
 		link.click()
 
 		return driver
