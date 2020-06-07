@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 
-def user_authentication(headless, iker):
+def user_authentication(headless, user):
 	DRIVER_PATH = "./chromedriver"
 	WEB_PAGE = "https://www.donostia.eus/donostiakirola/kirolekintzak/login.aspx?idioma=ES"
 
@@ -19,9 +19,9 @@ def user_authentication(headless, iker):
 	driver.get(WEB_PAGE)
 
 	web_dni = driver.find_element_by_id("MainContent_MainContent_a2txtCodigo_txtA2TextBox")
-	web_dni.send_keys(iker.dni)
+	web_dni.send_keys(user.dni)
 	web_cont = driver.find_element_by_id("MainContent_MainContent_a2txtPassword_txtA2TextBox")
-	web_cont.send_keys(iker.cont)
+	web_cont.send_keys(user.cont)
 	web_cont.send_keys(Keys.RETURN)
 
 	return driver
@@ -41,10 +41,10 @@ def reservation(driver):
 	except:
 		driver.quit()
 
-def installation(driver):
+def installation(driver, inst):
 	box = driver.find_element_by_id("MainContent_MainContent_cboFiliales")
 	for option in box.find_elements_by_tag_name('option'):
-		if option.text in "PACO YOLDI":
+		if option.text in inst:
 			option.click()
 	try:
 		link = WebDriverWait(driver, 10).until(
@@ -56,8 +56,9 @@ def installation(driver):
 	except:
 		driver.quit()
 
-def select_date(driver):
+def select_date(driver, date):
 	xpath = "//*[@class='day dialibre' and @data-day='08/06/2020']"
+	xpath = "//*[@class='day dialibre' and @data-day='" + date + "']"
 	try:
 		link = WebDriverWait(driver, 10).until(
 			EC.presence_of_element_located((By.XPATH, xpath))
@@ -68,8 +69,9 @@ def select_date(driver):
 	except:
 		driver.quit()
 
-def select_hour(driver):
+def select_hour(driver, hour):
 	xpath = "//tr[10]/td[1]"
+	xpath = "//tr[" + str(hour) + "]/td[1]"
 	try:
 		link = WebDriverWait(driver, 10).until(
 			EC.presence_of_element_located((By.XPATH, xpath))
