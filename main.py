@@ -1,4 +1,5 @@
 import time
+import sys
 
 from user import User
 from web_management import *
@@ -25,12 +26,21 @@ def load_file():
 
 	return user
 
-def main():
-	user = load_file()
-
+def parse_args(argv):
 	# Loading debug information
-	if(debug):
+	if(argv[0] == "1"):
+		debug = True
 		headless = False
+	elif(argv[0] == "0"):
+		debug = False
+		headless = True
+	else:
+		print("Incorrect first argument")
+		sys.exit(1)
+
+def main(argv):
+	parse_args(argv)
+	user = load_file()
 
 	main_driver = user_authentication(headless, user)
 	driver = reservation(main_driver)
@@ -44,4 +54,4 @@ def main():
 	main_driver.quit()
 
 if __name__ == "__main__":
-	main()
+	main(sys.argv[1:])
