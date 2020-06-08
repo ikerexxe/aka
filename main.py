@@ -10,6 +10,9 @@ debug = True
 headless = False
 
 def parse_args(argv):
+	global debug
+	global headless
+
 	# Loading debug information
 	if(argv[0] == "1"):
 		debug = True
