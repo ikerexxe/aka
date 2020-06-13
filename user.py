@@ -53,6 +53,8 @@ class User:
 		if(self.date != -1):
 			if(hours[self.count] == "10:15 - 11:25"):
 				index = 2
+			elif(hours[self.count] == "11:30 - 12:40"):
+				index = 3
 			elif(hours[self.count] == "18:10 - 19:20"):
 				index = 10
 
