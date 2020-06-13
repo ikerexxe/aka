@@ -1,5 +1,17 @@
 from user import User
 
+''' Configuration file format:
+Comment to identify the user
+DNI
+Password
+Installation
+Day of the week
+Time
+* The previous two lines can be repeated as many times as needed
+Blank line
+* Start again from top for another user
+'''
+
 def load_file():
 	users = []
 
