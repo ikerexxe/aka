@@ -5,6 +5,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 
+import datetime
+
 def user_authentication(headless, user):
 	DRIVER_PATH = "./chromedriver"
 	WEB_PAGE = "https://www.donostia.eus/donostiakirola/kirolekintzak/login.aspx?idioma=ES"
@@ -56,9 +58,23 @@ def installation(driver, inst):
 	except:
 		driver.quit()
 
+def is_weekend(date):
+	day = datetime.datetime.strptime(date, '%d/%m/%Y').weekday()
+
+	if(date == 5 or day == 6):
+		result = True
+	else:
+		result = False
+
+	return result
+
 def select_date(driver, date):
-	xpath = "//*[@class='day dialibre' and @data-day='08/06/2020']"
-	xpath = "//*[@class='day dialibre' and @data-day='" + date + "']"
+	#xpath = "//*[@class='day dialibre' and @data-day='08/06/2020']"
+	if(is_weekend(date)):
+		xpath = "//*[@class='day weekend dialibre' and @data-day='" + date + "']"
+	else:
+		xpath = "//*[@class='day dialibre' and @data-day='" + date + "']"
+
 	try:
 		link = WebDriverWait(driver, 10).until(
 			EC.presence_of_element_located((By.XPATH, xpath))
@@ -70,12 +86,14 @@ def select_date(driver, date):
 		driver.quit()
 
 def select_hour(driver, hour):
-	xpath = "//tr[10]/td[1]"
+	#xpath = "//tr[10]/td[1]"
 	xpath = "//tr[" + str(hour) + "]/td[1]"
+
 	try:
 		link = WebDriverWait(driver, 10).until(
 			EC.presence_of_element_located((By.XPATH, xpath))
 		)
+		print("link " + link.text)
 		link.click()
 
 		return driver

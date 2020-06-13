@@ -28,16 +28,17 @@ def main(argv):
 	parse_args(argv)
 	user = load_file()
 
-	main_driver = user_authentication(headless, user)
-	driver = reservation(main_driver)
-	driver = installation(driver, user.inst)
-	driver = select_date(driver, user.date)
-	driver = select_hour(driver, user.hour)
-	if(not debug):
-		driver = reserve(driver)
+	if(user.date != -1):
+		main_driver = user_authentication(headless, user)
+		driver = reservation(main_driver)
+		driver = installation(driver, user.inst)
+		driver = select_date(driver, user.date)
+		driver = select_hour(driver, user.hour)
+		if(not debug):
+			driver = reserve(driver)
 
-	time.sleep(5)
-	main_driver.quit()
+		time.sleep(5)
+		main_driver.quit()
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
