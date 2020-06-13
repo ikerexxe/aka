@@ -6,12 +6,17 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 
 import datetime
+import main
 
-def user_authentication(headless, user):
+def dprint(text):
+	if(main.debug):
+		print(text)
+
+def user_authentication(user):
 	DRIVER_PATH = "./chromedriver"
 	WEB_PAGE = "https://www.donostia.eus/donostiakirola/kirolekintzak/login.aspx?idioma=ES"
 
-	if(headless):
+	if(not main.debug):
 		options = Options()
 		options.set_headless()
 		assert options.headless # Operating in headless mode
@@ -25,6 +30,7 @@ def user_authentication(headless, user):
 	web_cont = driver.find_element_by_id("MainContent_MainContent_a2txtPassword_txtA2TextBox")
 	web_cont.send_keys(user.cont)
 	web_cont.send_keys(Keys.RETURN)
+	dprint("User: " + user.dni)
 
 	return driver
 
@@ -52,6 +58,7 @@ def installation(driver, inst):
 		link = WebDriverWait(driver, 10).until(
 			EC.presence_of_element_located((By.ID, "MainContent_MainContent_gridReservas"))
 		)
+		dprint("Installation: " + inst)
 		link.click()
 
 		return driver
@@ -79,6 +86,7 @@ def select_date(driver, date):
 		link = WebDriverWait(driver, 10).until(
 			EC.presence_of_element_located((By.XPATH, xpath))
 		)
+		dprint("Date: " + date)
 		link.click()
 
 		return driver
@@ -93,7 +101,7 @@ def select_hour(driver, hour):
 		link = WebDriverWait(driver, 10).until(
 			EC.presence_of_element_located((By.XPATH, xpath))
 		)
-		print("link " + link.text)
+		dprint("Hour: " + link.text)
 		link.click()
 
 		return driver

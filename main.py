@@ -7,7 +7,6 @@ from file_management import *
 
 # Debug variables
 debug = True
-headless = False
 
 def parse_args(argv):
 	global debug
@@ -16,10 +15,8 @@ def parse_args(argv):
 	# Loading debug information
 	if(argv[0] == "1"):
 		debug = True
-		headless = False
 	elif(argv[0] == "0"):
 		debug = False
-		headless = True
 	else:
 		print("Incorrect first argument")
 		sys.exit(1)
@@ -29,7 +26,7 @@ def main(argv):
 	user = load_file()
 
 	if(user.date != -1):
-		main_driver = user_authentication(headless, user)
+		main_driver = user_authentication(user)
 		driver = reservation(main_driver)
 		driver = installation(driver, user.inst)
 		driver = select_date(driver, user.date)
